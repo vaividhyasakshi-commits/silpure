@@ -32,7 +32,10 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BASE_PATH: /Sil-pure/
+          VITE_BASE_PATH: /silpure/
+          VITE_STATIC_CATALOG: "true"
+      - name: Support direct page links
+        run: node -e "require('node:fs').copyFileSync('dist/index.html', 'dist/404.html')"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
