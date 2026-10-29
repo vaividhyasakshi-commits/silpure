@@ -1,3 +1,4 @@
+import { useProducts } from "../context/ProductContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
@@ -114,73 +115,6 @@ const occasions = [
     title: "Wedding",
     subtitle: "For unforgettable moments.",
     image: ringImage,
-  },
-];
-
-const products = [
-  {
-    id: 1,
-    name: "Celestial Halo Ring",
-    price: "₹1,899",
-    oldPrice: "₹2,499",
-    image: ringImage,
-    badge: "BESTSELLER",
-  },
-  {
-    id: 2,
-    name: "Aurora Drop Earrings",
-    price: "₹2,199",
-    oldPrice: "",
-    image: ringImage,
-    badge: "NEW",
-  },
-  {
-    id: 3,
-    name: "Luna Heart Necklace",
-    price: "₹2,799",
-    oldPrice: "₹3,299",
-    image: ringImage,
-    badge: "",
-  },
-  {
-    id: 4,
-    name: "Ocean Bloom Bracelet",
-    price: "₹2,399",
-    oldPrice: "",
-    image: ringImage,
-    badge: "TRENDING",
-  },
-  {
-    id: 5,
-    name: "Silver Whisper Ring",
-    price: "₹1,599",
-    oldPrice: "₹1,999",
-    image: ringImage,
-    badge: "",
-  },
-  {
-    id: 6,
-    name: "Serene Pearl Earrings",
-    price: "₹1,999",
-    oldPrice: "",
-    image: ringImage,
-    badge: "",
-  },
-  {
-    id: 7,
-    name: "Infinity Grace Necklace",
-    price: "₹2,999",
-    oldPrice: "₹3,599",
-    image: ringImage,
-    badge: "BESTSELLER",
-  },
-  {
-    id: 8,
-    name: "Minimal Curve Bracelet",
-    price: "₹2,499",
-    oldPrice: "",
-    image: ringImage,
-    badge: "",
   },
 ];
 
@@ -303,7 +237,7 @@ function ProductCard({ product }) {
           <FiHeart size={16} />
         </button>
 
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${product.slug || product.id}`}>
           <img
             src={product.image}
             alt={product.name}
@@ -320,14 +254,14 @@ function ProductCard({ product }) {
 
       <div className="pt-4 text-center">
         <Link
-          to={`/product/${product.id}`}
+          to={`/product/${product.slug || product.id}`}
           className="text-sm font-medium text-[var(--c-183e50)] transition hover:text-[var(--c-0b779d)]"
         >
           {product.name}
         </Link>
 
         <div className="mt-2 flex items-center justify-center gap-2 text-sm">
-          <span className="font-semibold text-[var(--c-082f49)]">{product.price}</span>
+          <span className="font-semibold text-[var(--c-082f49)]">₹{Number(product.price || 0).toLocaleString("en-IN")}</span>
 
           {product.oldPrice && (
             <span className="text-xs text-[var(--c-9aadb4)] line-through">
@@ -342,6 +276,9 @@ function ProductCard({ product }) {
 
 export default function Home() {
   const [slide, setSlide] = useState(0);
+  const { products, loading: productsLoading, error: productsError } = useProducts();
+  const featuredProducts = products.filter((product) => product.isFeatured || product.isNewArrival || product.badge === "BESTSELLER");
+  const homeProducts = (featuredProducts.length ? featuredProducts : products).slice(0, 8);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -385,8 +322,8 @@ export default function Home() {
 
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--c-032d47)]/65 via-[var(--c-073954)]/25 to-transparent" />
 
-              <div className="relative mx-auto flex min-h-[620px] max-w-[1500px] items-center px-5 sm:min-h-[720px] sm:px-8 lg:px-14">
-                <div className="max-w-xl text-white">
+              <div className="relative mx-auto flex min-h-[620px] max-w-[1500px] items-center px-5 pb-20 pt-8 sm:min-h-[720px] sm:px-8 sm:pb-28 sm:pt-10 lg:px-14">
+                <div className="max-w-xl -translate-y-8 text-white sm:-translate-y-10 lg:-translate-y-12">
                   <p className="mb-5 text-[10px] font-semibold tracking-[0.28em] sm:text-xs">
                     {item.eyebrow}
                   </p>
@@ -580,7 +517,10 @@ export default function Home() {
             />
 
             <div className="flex gap-4 overflow-x-auto pb-5 sm:gap-5 lg:grid lg:grid-cols-4 lg:overflow-visible">
-              {products.map((product) => (
+              {productsLoading && <p className="py-10 text-sm text-[#69828d]">Loading products...</p>}
+              {productsError && <p role="alert" className="py-10 text-sm text-red-600">{productsError}</p>}
+              {!productsLoading && !productsError && homeProducts.length === 0 && <p className="py-10 text-sm text-[#69828d]">No featured products available yet.</p>}
+              {!productsLoading && !productsError && homeProducts.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}

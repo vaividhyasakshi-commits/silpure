@@ -1,0 +1,23 @@
+[
+    {
+        "name": "TEST PRODUCT",
+        "category": "bracelets",
+        "price": 2999,
+        "oldPrice": 4999,
+        "shortDescription": "TEST PRODUCT UPLOAD",
+        "description": "TEST PRODUCT UPLOAD TEST PRODUCT UPLOAD",
+        "material": "925 Sterling Silver",
+        "badge": "BESTSELLER",
+        "inStock": true,
+        "isNewArrival": true,
+        "collections": [
+            "office-wear",
+            "festive",
+            "for-her",
+            "for-sis"
+        ],
+        "id": 1,
+        "slug": "test-product-1",
+        "image": "/uploads/products/ef36cf5e16b591c63c93f9efc334ce16.png"
+    }
+]

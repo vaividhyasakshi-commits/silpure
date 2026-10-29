@@ -1,5 +1,14 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import {
+  useState,
+  useEffect,
+  useRef,
+} from "react";
+
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
+
 import {
   FiSearch,
   FiUser,
@@ -16,176 +25,478 @@ import {
 import logo from "../assets/images/logo.png";
 import ringImage from "../assets/images/1.png";
 
+/* =========================================================
+   SHOP MEGA MENU DATA
+========================================================= */
+
 const shopColumns = [
   {
     title: "For Her",
     links: [
-      "Rings",
-      "Earrings",
-      "Necklaces",
-      "Bracelets",
-      "Anklets",
-      "Toe Rings",
+      {
+        label: "Rings",
+        href: "/rings",
+      },
+      {
+        label: "Earrings",
+        href: "/earrings",
+      },
+      {
+        label: "Necklaces",
+        href: "/necklaces",
+      },
+      {
+        label: "Bracelets",
+        href: "/bracelets",
+      },
+      {
+        label: "Anklets",
+        href: "/anklets",
+      },
+      {
+        label: "Toe Rings",
+        href: "/toe-rings",
+      },
     ],
   },
+
   {
     title: "Shop For Him",
-    links: ["Men's Rings", "Men's Bracelets", "Men's Chains"],
+    links: [
+      {
+        label: "Men's Rings",
+        href: "/mens-rings",
+      },
+      {
+        label: "Men's Bracelets",
+        href: "/mens-bracelets",
+      },
+      {
+        label: "Men's Chains",
+        href: "/mens-chains",
+      },
+    ],
   },
+
   {
     title: "Shop By Occasion",
-    links: ["Daily Wear", "Office Wear", "Festive", "Wedding"],
+    links: [
+      {
+        label: "Daily Wear",
+        href: "/daily-wear",
+      },
+      {
+        label: "Office Wear",
+        href: "/office-wear",
+      },
+      {
+        label: "Festive",
+        href: "/festive",
+      },
+      {
+        label: "Wedding",
+        href: "/wedding",
+      },
+    ],
   },
+
   {
     title: "Gifting",
-    links: ["For Her", "For Him", "For Mom", "For Sister", "Under ₹1,999"],
+    links: [
+      {
+        label: "For Her",
+        href: "/gifts-for-her",
+      },
+      {
+        label: "For Him",
+        href: "/gifts-for-him",
+      },
+      {
+        label: "For Mom",
+        href: "/gifts-for-mom",
+      },
+      {
+        label: "For Sister",
+        href: "/gifts-for-sister",
+      },
+      {
+        label: "Under ₹1,999",
+        href: "/under-1999",
+      },
+    ],
   },
 ];
 
+/* =========================================================
+   MAIN NAV
+========================================================= */
+
 const navLinks = [
-  { label: "New Arrivals", href: "/shop" },
-  { label: "Rings", href: "/shop" },
-  { label: "Earrings", href: "/shop" },
-  { label: "Necklaces", href: "/shop" },
-  { label: "Bracelets", href: "/shop" },
+  {
+    label: "New Arrivals",
+    href: "/new-arrivals",
+  },
+  {
+    label: "Rings",
+    href: "/rings",
+  },
+  {
+    label: "Earrings",
+    href: "/earrings",
+  },
+  {
+    label: "Necklaces",
+    href: "/necklaces",
+  },
+  {
+    label: "Bracelets",
+    href: "/bracelets",
+  },
 ];
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileShopOpen, setMobileShopOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const location = useLocation();
+
+  /* =========================================================
+     STATES
+  ========================================================= */
+
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
+
+  const [mobileShopOpen, setMobileShopOpen] =
+    useState(false);
+
+  const [searchOpen, setSearchOpen] =
+    useState(false);
+
+  const [shopOpen, setShopOpen] =
+    useState(false);
+
+  const shopCloseTimer = useRef(null);
+
+  /* =========================================================
+     THEME
+  ========================================================= */
 
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("silpure-theme") || "ocean";
+      return (
+        localStorage.getItem("silpure-theme") ||
+        "ocean"
+      );
     }
+
     return "ocean";
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    document.body.classList.toggle("sky-mode", theme === "sky");
-    localStorage.setItem("silpure-theme", theme);
+    document.documentElement.setAttribute(
+      "data-theme",
+      theme
+    );
+
+    document.body.classList.toggle(
+      "sky-mode",
+      theme === "sky"
+    );
+
+    localStorage.setItem(
+      "silpure-theme",
+      theme
+    );
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "ocean" ? "sky" : "ocean"));
+    setTheme((prev) =>
+      prev === "ocean" ? "sky" : "ocean"
+    );
   };
+
+  /* =========================================================
+     ACTIVE ROUTE
+  ========================================================= */
+
+  const isActive = (href) => {
+    return location.pathname === href;
+  };
+
+  const isShopSectionActive = shopColumns.some(
+    (column) =>
+      column.links.some(
+        (item) =>
+          item.href === location.pathname
+      )
+  );
+
+  /* =========================================================
+     DESKTOP SHOP HOVER DELAY
+  ========================================================= */
+
+  const openShopMenu = () => {
+    if (shopCloseTimer.current) {
+      clearTimeout(
+        shopCloseTimer.current
+      );
+    }
+
+    setShopOpen(true);
+  };
+
+  const closeShopMenu = () => {
+    if (shopCloseTimer.current) {
+      clearTimeout(
+        shopCloseTimer.current
+      );
+    }
+
+    shopCloseTimer.current = setTimeout(
+      () => {
+        setShopOpen(false);
+      },
+      350
+    );
+  };
+
+  const cancelShopClose = () => {
+    if (shopCloseTimer.current) {
+      clearTimeout(
+        shopCloseTimer.current
+      );
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (shopCloseTimer.current) {
+        clearTimeout(
+          shopCloseTimer.current
+        );
+      }
+    };
+  }, []);
+
+  /* =========================================================
+     BODY
+  ========================================================= */
 
   return (
     <>
       <header className="site-header sticky top-0 z-50 bg-white">
-        {/* TOP BAR */}
+        {/* ================================================
+            TOP BAR
+        ================================================= */}
+
         <div className="bg-[var(--c-063653)] px-4 py-2.5 text-white">
           <div className="mx-auto flex max-w-7xl items-center justify-center gap-5 text-[10px] font-medium tracking-[0.18em] sm:gap-9 sm:text-xs">
-            <span>FREE SHIPPING</span>
+            <span>
+              FREE SHIPPING
+            </span>
 
             <span className="h-3 w-px bg-white/30" />
 
-            <span>925 STERLING SILVER</span>
+            <span>
+              925 STERLING SILVER
+            </span>
 
             <span className="hidden h-3 w-px bg-white/30 sm:block" />
 
-            <span className="hidden sm:inline">EASY RETURNS</span>
+            <span className="hidden sm:inline">
+              EASY RETURNS
+            </span>
           </div>
         </div>
 
-        {/* OFFER BAR */}
-        <div className="bg-[var(--c-eaf4f7)] px-4 py-2.5 text-center text-xs text-[var(--c-063653)]">
-          Get <span className="font-bold">10% OFF</span> on your first order.
-          Use code{" "}
-          <span className="font-bold tracking-wide">WELCOME10</span>
-        </div>
+        {/* ================================================
+            MAIN HEADER
+        ================================================= */}
 
-        {/* MAIN HEADER */}
         <div className="relative border-b border-[var(--c-dfecef)] bg-white">
-          <div className="mx-auto flex h-[115px] max-w-[1500px] items-center justify-between px-5 lg:px-10">
-            {/* MOBILE MENU */}
+          <div className="mx-auto flex h-[88px] max-w-[1500px] items-center justify-between px-5 lg:px-10">
+            {/* ============================================
+                MOBILE MENU BUTTON
+            ============================================= */}
+
             <button
-              onClick={() => setMobileOpen(true)}
+              type="button"
+              onClick={() =>
+                setMobileOpen(true)
+              }
               className="flex h-10 w-10 items-center justify-center text-[var(--c-082f49)] lg:hidden"
+              aria-label="Open menu"
             >
               <FiMenu size={24} />
             </button>
 
-            {/* LOGO */}
-            <Link to="/" className="shrink-0">
+            {/* ============================================
+                LOGO
+            ============================================= */}
+
+            <Link
+              to="/"
+              className="shrink-0"
+            >
               <img
                 src={logo}
                 alt="Silpure"
-                className="h-[65px] w-auto object-contain sm:h-[72px]"
+                className="h-[58px] w-auto object-contain sm:h-[62px]"
               />
             </Link>
 
-            {/* DESKTOP NAV */}
-            <nav className="hidden items-center gap-7 xl:gap-8 lg:flex">
+            {/* ============================================
+                DESKTOP NAV
+            ============================================= */}
+
+            <nav className="hidden items-center gap-7 lg:flex xl:gap-8">
+              {/* HOME */}
+
               <Link
                 to="/"
-                className="text-[14px] font-medium tracking-wide text-[var(--c-173c4e)] transition hover:text-[var(--c-087ca7)]"
+                className={`text-[14px] font-medium tracking-wide transition ${
+                  location.pathname === "/"
+                    ? "text-[var(--c-087ca7)]"
+                    : "text-[var(--c-173c4e)] hover:text-[var(--c-087ca7)]"
+                }`}
               >
                 HOME
               </Link>
 
-              {/* SHOP MEGA MENU */}
-              <div className="group static">
-                <button className="flex items-center gap-1.5 py-10 text-[14px] font-medium tracking-wide text-[var(--c-173c4e)] transition group-hover:text-[var(--c-087ca7)]">
+              {/* ========================================
+                  SHOP MEGA MENU
+              ========================================= */}
+
+              <div
+                className="static"
+                onMouseEnter={
+                  openShopMenu
+                }
+                onMouseLeave={
+                  closeShopMenu
+                }
+              >
+                <button
+                  type="button"
+                  onMouseEnter={
+                    openShopMenu
+                  }
+                  className={`flex items-center gap-1.5 py-7 text-[14px] font-medium tracking-wide transition ${
+                    shopOpen ||
+                    isShopSectionActive
+                      ? "text-[var(--c-087ca7)]"
+                      : "text-[var(--c-173c4e)] hover:text-[var(--c-087ca7)]"
+                  }`}
+                >
                   SHOP
+
                   <FiChevronDown
                     size={15}
-                    className="transition duration-300 group-hover:rotate-180"
+                    className={`transition duration-300 ${
+                      shopOpen
+                        ? "rotate-180"
+                        : ""
+                    }`}
                   />
                 </button>
 
-                {/* FULL WIDTH DROPDOWN */}
+                {/* ======================================
+                    FULL WIDTH DROPDOWN
+                ======================================= */}
+
                 <div
-                  className="
-                    pointer-events-none
+                  onMouseEnter={() => {
+                    cancelShopClose();
+                    setShopOpen(true);
+                  }}
+                  onMouseLeave={
+                    closeShopMenu
+                  }
+                  className={`
                     absolute
                     left-0
                     right-0
                     top-full
                     z-50
-                    translate-y-2
                     border-t
                     border-[var(--c-e3ecef)]
                     bg-white
-                    opacity-0
                     shadow-[0_25px_60px_rgba(3,47,73,0.14)]
                     transition-all
                     duration-300
 
-                    group-hover:pointer-events-auto
-                    group-hover:translate-y-0
-                    group-hover:opacity-100
-                  "
+                    ${
+                      shopOpen
+                        ? "pointer-events-auto visible translate-y-0 opacity-100"
+                        : "pointer-events-none invisible translate-y-2 opacity-0"
+                    }
+                  `}
                 >
                   <div className="mx-auto grid max-w-[1450px] grid-cols-[1fr_270px] gap-10 px-10 py-10">
-                    {/* LINKS */}
-                    <div className="grid grid-cols-4 gap-10">
-                      {shopColumns.map((column) => (
-                        <div key={column.title}>
-                          <h4 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.19em] text-[var(--c-073653)]">
-                            {column.title}
-                          </h4>
+                    {/* ================================
+                        LINKS
+                    ================================= */}
 
-                          <div className="space-y-4">
-                            {column.links.map((item) => (
-                              <Link
-                                key={item}
-                                to="/shop"
-                                className="block text-[15px] text-[var(--c-587482)] transition duration-200 hover:translate-x-1 hover:text-[var(--c-087ca7)]"
-                              >
-                                {item}
-                              </Link>
-                            ))}
+                    <div className="grid grid-cols-4 gap-10">
+                      {shopColumns.map(
+                        (column) => (
+                          <div
+                            key={
+                              column.title
+                            }
+                          >
+                            <h4 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.19em] text-[var(--c-073653)]">
+                              {
+                                column.title
+                              }
+                            </h4>
+
+                            <div className="space-y-4">
+                              {column.links.map(
+                                (
+                                  item
+                                ) => (
+                                  <Link
+                                    key={
+                                      item.label
+                                    }
+                                    to={
+                                      item.href
+                                    }
+                                    onClick={() =>
+                                      setShopOpen(
+                                        false
+                                      )
+                                    }
+                                    className={`block text-[15px] transition duration-200 hover:translate-x-1 hover:text-[var(--c-087ca7)] ${
+                                      isActive(
+                                        item.href
+                                      )
+                                        ? "font-medium text-[var(--c-087ca7)]"
+                                        : "text-[var(--c-587482)]"
+                                    }`}
+                                  >
+                                    {
+                                      item.label
+                                    }
+                                  </Link>
+                                )
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      )}
                     </div>
 
-                    {/* RIGHT FEATURE CARD */}
+                    {/* ================================
+                        FEATURE CARD
+                    ================================= */}
+
                     <Link
-                      to="/shop"
+                      to="/new-arrivals"
+                      onClick={() =>
+                        setShopOpen(
+                          false
+                        )
+                      }
                       className="group/card relative h-[320px] overflow-hidden bg-[var(--c-eef7f9)]"
                     >
                       <img
@@ -204,10 +515,12 @@ export default function Header() {
                         <h3
                           className="mt-2 text-2xl"
                           style={{
-                            fontFamily: "Georgia, 'Times New Roman', serif",
+                            fontFamily:
+                              "Georgia, 'Times New Roman', serif",
                           }}
                         >
-                          Everyday Elegance
+                          Everyday
+                          Elegance
                         </h3>
 
                         <div className="mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.16em]">
@@ -220,72 +533,135 @@ export default function Header() {
                 </div>
               </div>
 
-              {navLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  className="whitespace-nowrap text-[14px] font-medium tracking-wide text-[var(--c-173c4e)] transition hover:text-[var(--c-087ca7)]"
-                >
-                  {item.label.toUpperCase()}
-                </Link>
-              ))}
+              {/* ========================================
+                  MAIN NAV LINKS
+              ========================================= */}
+
+              {navLinks.map(
+                (item) => (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className={`whitespace-nowrap text-[14px] font-medium tracking-wide transition ${
+                      isActive(
+                        item.href
+                      )
+                        ? "text-[var(--c-087ca7)]"
+                        : "text-[var(--c-173c4e)] hover:text-[var(--c-087ca7)]"
+                    }`}
+                  >
+                    {item.label.toUpperCase()}
+                  </Link>
+                )
+              )}
             </nav>
 
-            {/* ICONS */}
+            {/* ============================================
+                ICONS
+            ============================================= */}
+
             <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-              {/* THEME TOGGLE: Deep Ocean <-> Sky Blue */}
+              {/* THEME */}
+
               <button
+                type="button"
                 onClick={toggleTheme}
                 aria-label="Toggle color theme"
-                title={theme === "ocean" ? "Switch to Sky Blue" : "Switch to Deep Ocean"}
+                title={
+                  theme === "ocean"
+                    ? "Switch to Sky Blue"
+                    : "Switch to Deep Ocean"
+                }
                 className="theme-accent relative flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
               >
-                {theme === "ocean" ? <FiDroplet size={19} /> : <FiSun size={19} />}
+                {theme ===
+                "ocean" ? (
+                  <FiDroplet
+                    size={19}
+                  />
+                ) : (
+                  <FiSun
+                    size={19}
+                  />
+                )}
               </button>
+
+              {/* SEARCH */}
 
               <button
-                onClick={() => setSearchOpen(!searchOpen)}
+                type="button"
+                onClick={() =>
+                  setSearchOpen(
+                    !searchOpen
+                  )
+                }
                 className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
+                aria-label="Search"
               >
-                <FiSearch size={20} />
+                <FiSearch
+                  size={20}
+                />
               </button>
 
-              <Link
-                to="/account"
-                className="hidden h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:flex"
-              >
-                <FiUser size={20} />
-              </Link>
+              {/* ACCOUNT */}
 
-              <Link
-                to="/wishlist"
+              <button
+                type="button"
                 className="hidden h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:flex"
+                aria-label="Account"
               >
-                <FiHeart size={20} />
-              </Link>
+                <FiUser
+                  size={20}
+                />
+              </button>
 
-              <Link
-                to="/cart"
+              {/* WISHLIST */}
+
+              <button
+                type="button"
+                className="hidden h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:flex"
+                aria-label="Wishlist"
+              >
+                <FiHeart
+                  size={20}
+                />
+              </button>
+
+              {/* CART */}
+
+              <button
+                type="button"
                 className="relative flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
+                aria-label="Cart"
               >
-                <FiShoppingBag size={20} />
+                <FiShoppingBag
+                  size={20}
+                />
 
                 <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--c-0b668d)] text-[9px] text-white">
                   0
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
 
-        {/* SEARCH BAR */}
+        {/* ================================================
+            SEARCH BAR
+        ================================================= */}
+
         <div
           className={`overflow-hidden border-b border-[var(--c-e1ecef)] bg-white transition-all duration-300 ${
-            searchOpen ? "max-h-24 opacity-100" : "max-h-0 opacity-0"
+            searchOpen
+              ? "max-h-24 opacity-100"
+              : "max-h-0 opacity-0"
           }`}
         >
           <div className="mx-auto flex max-w-4xl items-center gap-3 px-6 py-5">
-            <FiSearch className="text-[var(--c-73929f)]" size={20} />
+            <FiSearch
+              className="text-[var(--c-73929f)]"
+              size={20}
+            />
 
             <input
               type="text"
@@ -293,31 +669,56 @@ export default function Header() {
               className="w-full bg-transparent text-sm text-[var(--c-183b4d)] outline-none placeholder:text-[var(--c-8ca3ad)]"
             />
 
-            <button onClick={() => setSearchOpen(false)}>
-              <FiX size={20} />
+            <button
+              type="button"
+              onClick={() =>
+                setSearchOpen(false)
+              }
+              aria-label="Close search"
+            >
+              <FiX
+                size={20}
+              />
             </button>
           </div>
         </div>
       </header>
 
-      {/* MOBILE MENU */}
+      {/* =================================================
+          MOBILE MENU
+      ================================================== */}
+
       <div
         className={`fixed inset-0 z-[100] ${
-          mobileOpen ? "visible" : "invisible"
+          mobileOpen
+            ? "visible"
+            : "invisible"
         }`}
       >
+        {/* OVERLAY */}
+
         <div
-          onClick={() => setMobileOpen(false)}
+          onClick={() =>
+            setMobileOpen(false)
+          }
           className={`absolute inset-0 bg-black/45 transition-opacity ${
-            mobileOpen ? "opacity-100" : "opacity-0"
+            mobileOpen
+              ? "opacity-100"
+              : "opacity-0"
           }`}
         />
 
+        {/* DRAWER */}
+
         <aside
-          className={`absolute left-0 top-0 h-full w-[88%] max-w-[380px] overflow-y-auto bg-white transition-transform duration-300 ${
-            mobileOpen ? "translate-x-0" : "-translate-x-full"
+          className={`absolute left-0 top-0 h-full w-[88%] max-w-[390px] overflow-y-auto bg-white transition-transform duration-300 ${
+            mobileOpen
+              ? "translate-x-0"
+              : "-translate-x-full"
           }`}
         >
+          {/* MOBILE HEADER */}
+
           <div className="flex items-center justify-between border-b border-[var(--c-e2edf0)] px-5 py-5">
             <img
               src={logo}
@@ -325,68 +726,161 @@ export default function Header() {
               className="h-[55px] w-auto object-contain"
             />
 
-            <button onClick={() => setMobileOpen(false)}>
-              <FiX size={25} />
+            <button
+              type="button"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+              aria-label="Close menu"
+            >
+              <FiX
+                size={25}
+              />
             </button>
           </div>
 
+          {/* MOBILE LINKS */}
+
           <div className="p-5">
+            {/* HOME */}
+
             <Link
               to="/"
-              onClick={() => setMobileOpen(false)}
-              className="block border-b border-[var(--c-edf2f4)] py-4 text-sm font-medium text-[var(--c-143e52)]"
+              onClick={() =>
+                setMobileOpen(false)
+              }
+              className={`block border-b border-[var(--c-edf2f4)] py-4 text-sm font-medium ${
+                location.pathname ===
+                "/"
+                  ? "text-[var(--c-087ca7)]"
+                  : "text-[var(--c-143e52)]"
+              }`}
             >
               Home
             </Link>
 
+            {/* SHOP BUTTON */}
+
             <button
-              onClick={() => setMobileShopOpen(!mobileShopOpen)}
+              type="button"
+              onClick={() =>
+                setMobileShopOpen(
+                  !mobileShopOpen
+                )
+              }
               className="flex w-full items-center justify-between border-b border-[var(--c-edf2f4)] py-4 text-sm font-medium text-[var(--c-143e52)]"
             >
               Shop
 
               <FiChevronDown
-                className={`transition ${
-                  mobileShopOpen ? "rotate-180" : ""
+                className={`transition duration-300 ${
+                  mobileShopOpen
+                    ? "rotate-180"
+                    : ""
                 }`}
               />
             </button>
 
+            {/* MOBILE SHOP MENU */}
+
             {mobileShopOpen && (
-              <div className="bg-[var(--c-f7fbfc)] px-4 py-3">
-                {shopColumns[0].links.map((item) => (
-                  <Link
-                    key={item}
-                    to="/shop"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between py-3 text-sm text-[var(--c-5f7984)]"
-                  >
-                    {item}
-                    <FiChevronRight size={14} />
-                  </Link>
-                ))}
+              <div className="bg-[var(--c-f7fbfc)] px-4 py-5">
+                {shopColumns.map(
+                  (column) => (
+                    <div
+                      key={
+                        column.title
+                      }
+                      className="mb-7 last:mb-0"
+                    >
+                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--c-073653)]">
+                        {
+                          column.title
+                        }
+                      </p>
+
+                      <div>
+                        {column.links.map(
+                          (
+                            item
+                          ) => (
+                            <Link
+                              key={
+                                item.label
+                              }
+                              to={
+                                item.href
+                              }
+                              onClick={() => {
+                                setMobileOpen(
+                                  false
+                                );
+
+                                setMobileShopOpen(
+                                  false
+                                );
+                              }}
+                              className={`flex items-center justify-between border-b border-[var(--c-edf2f4)]/70 py-3 text-sm transition ${
+                                isActive(
+                                  item.href
+                                )
+                                  ? "font-medium text-[var(--c-087ca7)]"
+                                  : "text-[var(--c-5f7984)]"
+                              }`}
+                            >
+                              {
+                                item.label
+                              }
+
+                              <FiChevronRight
+                                size={
+                                  14
+                                }
+                              />
+                            </Link>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
             )}
 
-            {navLinks.map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="block border-b border-[var(--c-edf2f4)] py-4 text-sm font-medium text-[var(--c-143e52)]"
-              >
-                {item.label}
-              </Link>
-            ))}
+            {/* MAIN NAV MOBILE */}
 
-            <Link
-              to="/wishlist"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 border-b border-[var(--c-edf2f4)] py-4 text-sm text-[var(--c-143e52)]"
+            {navLinks.map(
+              (item) => (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  onClick={() =>
+                    setMobileOpen(
+                      false
+                    )
+                  }
+                  className={`block border-b border-[var(--c-edf2f4)] py-4 text-sm font-medium ${
+                    isActive(
+                      item.href
+                    )
+                      ? "text-[var(--c-087ca7)]"
+                      : "text-[var(--c-143e52)]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
+
+            {/* WISHLIST */}
+
+            <button
+              type="button"
+              className="flex w-full items-center gap-3 border-b border-[var(--c-edf2f4)] py-4 text-sm text-[var(--c-143e52)]"
             >
               <FiHeart />
               Wishlist
-            </Link>
+            </button>
           </div>
         </aside>
       </div>

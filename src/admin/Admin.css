@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+.sil-admin-login,.sil-admin-shell,.sil-admin-center{font-family:'DM Sans',sans-serif;color:#17394b}
+.sil-admin-login{min-height:100vh;display:grid;place-items:center;padding:25px;background:linear-gradient(135deg,#f0f5f6,#fafbfb 60%,#e6edf1)}
+.sil-admin-login-card{width:min(100%,450px);padding:49px 42px;background:#fff;box-shadow:0 24px 90px #082e4514;border:1px solid #e4ebef}
+.sil-admin-overline{font-size:10px;letter-spacing:2.8px;font-weight:700;color:#5c8a9d}
+.sil-admin-login h1,.sil-admin-heading h1{font:normal 44px Georgia,serif;color:#0b354a;margin:16px 0 12px}
+.sil-admin-login p,.sil-admin-heading p{color:#77909d;font-size:14px;line-height:1.7}
+.sil-admin-login form{display:grid;margin-top:34px;gap:11px}
+.sil-admin-login label{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-top:8px}
+.sil-admin-login input{border:1px solid #dce6ea;padding:14px 16px;background:#fbfdfd;outline-color:#0c5269;border-radius:2px}
+.sil-admin-login form button,.sil-admin-heading button{border:0;background:#093a53;color:white;padding:15px 20px;margin-top:14px;cursor:pointer;font-weight:600}
+.sil-admin-login button:disabled{opacity:.6}
+.sil-admin-login-card>a{display:inline-block;margin-top:28px;color:#5c8598;font-size:12px}
+.sil-admin-error{color:#bb3344!important;background:#fff4f4;padding:9px}
+.sil-admin-center{min-height:100vh;display:grid;place-items:center}
+.sil-admin-shell{display:flex;min-height:100vh;background:#f6f9fa}
+.sil-admin-sidebar{width:255px;flex-shrink:0;background:#07354d;color:white;padding:32px 22px;display:flex;flex-direction:column;gap:24px}
+.sil-admin-brand{font:normal 27px Georgia,serif;color:white;letter-spacing:2px;text-decoration:none}
+.sil-admin-brand span{display:block;font:600 9px 'DM Sans',sans-serif;letter-spacing:4px;color:#a6c1cb;margin-top:7px}
+.sil-admin-sidebar .sil-admin-overline{margin-top:30px;color:#8ba8b8}
+.sil-admin-nav-active{padding:15px;background:#ffffff17;color:white;text-decoration:none;font-size:14px;border-left:2px solid #b8d7df}
+.sil-admin-nav-note{font-size:12px;color:#adc4d0;line-height:1.6}
+.sil-admin-store-link{margin-top:auto;color:#c6d7df;font-size:13px;text-decoration:none}
+.sil-admin-main{flex:1;min-width:0}
+.sil-admin-topbar{height:78px;background:white;border-bottom:1px solid #e5ebef;display:flex;align-items:center;justify-content:space-between;padding:0 35px;font-size:13px}
+.sil-admin-topbar>div{display:flex;align-items:center;gap:25px}
+.sil-admin-user{font-weight:700}
+.sil-admin-topbar button{background:none;border:1px solid #dae3e8;padding:10px 16px;cursor:pointer;color:#123b52}
+.sil-admin-dashboard{max-width:1250px;padding:45px 36px;margin:auto}
+.sil-admin-heading{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.sil-admin-heading h1{margin:10px 0 0}
+.sil-admin-heading button{margin:0}
+.sil-admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:35px 0}
+.sil-admin-stats>div{background:white;border:1px solid #e2eaf0;padding:25px}
+.sil-admin-stats span{display:block;font-size:12px;color:#718b99;margin-bottom:15px}
+.sil-admin-stats strong{font:normal 38px Georgia,serif;color:#123d53}
+.sil-admin-panel{background:white;border:1px solid #e2eaf0;padding:24px}
+.sil-admin-section-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid #ecf0f2}
+.sil-admin-section-top h2{font:normal 25px Georgia,serif;margin:0}
+.sil-admin-section-top>span,.sil-admin-footnote{font-size:12px;color:#7b96a3}
+.sil-admin-product{display:flex;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid #edf1f3}
+.sil-admin-product img{width:65px;height:65px;object-fit:contain;background:#f5f8f9}
+.sil-admin-product>div{flex:1;display:grid;gap:7px}
+.sil-admin-product strong{font-size:14px}
+.sil-admin-product span{font-size:12px;color:#7893a1;text-transform:capitalize}
+.sil-admin-product b{font-size:14px}
+.sil-admin-footnote{margin-top:30px}
+@media(max-width:850px){.sil-admin-stats{grid-template-columns:repeat(2,1fr)}.sil-admin-sidebar{width:190px}.sil-admin-dashboard{padding:25px}.sil-admin-topbar{padding:0 20px}}
+@media(max-width:600px){.sil-admin-shell{display:block}.sil-admin-sidebar{width:100%;padding:18px;gap:12px}.sil-admin-sidebar .sil-admin-overline,.sil-admin-nav-note{display:none}.sil-admin-topbar{height:65px}.sil-admin-dashboard{padding:20px}.sil-admin-heading{align-items:flex-start;flex-direction:column}.sil-admin-stats{gap:9px}.sil-admin-stats>div{padding:16px}.sil-admin-login-card{padding:32px 22px}.sil-admin-topbar>div{gap:8px}}
+
+.sil-admin-nav{display:block;color:#d1e1e7;text-decoration:none;font-size:14px;padding:15px;border-left:2px solid transparent}.sil-btn,.sil-btn-outline,.sil-btn-danger{display:inline-block;text-decoration:none;padding:11px 15px;border-radius:2px;font-size:12px;font-weight:700;cursor:pointer}.sil-btn{background:#073a53;color:white;border:1px solid #073a53}.sil-btn-outline{background:white;color:#16465b;border:1px solid #cfdee5}.sil-btn-danger{background:#fff7f7;color:#a52d3d;border:1px solid #efc7ce}.sil-table-panel{margin-top:24px}.sil-tools{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}.sil-tools input{padding:12px;border:1px solid #d6e3e9;min-width:250px}.sil-table-item{display:flex;align-items:center;gap:16px;padding:17px 0;border-bottom:1px solid #edf0f2}.sil-table-item img{width:65px;height:65px;object-fit:contain;background:#f4f7f9}.sil-table-description{flex:1;min-width:120px;display:grid;gap:6px}.sil-table-description small,.sil-note{font-size:12px;color:#658292}.sil-edit-form{margin-top:26px}.sil-edit-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);gap:35px}.sil-fields{display:grid;gap:17px}.sil-edit-form label{display:grid;gap:8px;font-size:12px;font-weight:700;color:#234b60}.sil-edit-form input:not([type=checkbox]):not([type=file]),.sil-edit-form textarea,.sil-edit-form select{width:100%;padding:12px 13px;border:1px solid #d8e3e9;background:#fbfdfd;color:#143b50;font:14px 'DM Sans',sans-serif;box-sizing:border-box}.sil-field-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}.sil-image-column{padding:20px;background:#f5f8f9;align-self:start}.sil-image-column h2,.sil-choice-box h2{font:normal 23px Georgia,serif;margin:0 0 17px}.sil-image-preview{aspect-ratio:1/1;background:white;border:1px solid #e1eaed;display:grid;place-items:center;color:#78909d;margin-bottom:16px}.sil-image-preview img{width:100%;height:100%;object-fit:contain}.sil-image-column small{display:block;margin-top:12px;color:#728b97}.sil-choice-box{margin-top:30px;border-top:1px solid #e2ebee;padding-top:26px}.sil-choice-box p{font-size:12px;color:#728b97}.sil-checkbox-grid{display:flex;flex-wrap:wrap;gap:14px 23px;margin:18px 0}.sil-checkbox-grid label{display:flex;align-items:center;gap:7px}.sil-form-actions{display:flex;gap:12px;margin-top:30px}.sil-btn:disabled,.sil-btn-danger:disabled{opacity:.55;cursor:not-allowed}@media(max-width:800px){.sil-edit-grid{grid-template-columns:1fr}.sil-table-item{flex-wrap:wrap}.sil-field-row{grid-template-columns:1fr}.sil-tools{flex-wrap:wrap}}

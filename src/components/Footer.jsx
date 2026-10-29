@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+
 import {
   FiInstagram,
   FiFacebook,
@@ -10,29 +11,53 @@ import {
 } from "react-icons/fi";
 
 const popularLinks = [
-  "Silver Rings",
-  "925 Silver Earrings",
-  "Silver Bracelets",
-  "Silver Necklaces",
-  "Daily Wear Jewellery",
-  "Office Wear Jewellery",
-  "Jewellery Under ₹1999",
-  "Gifts For Her",
+  {
+    label: "Silver Rings",
+    href: "/rings",
+  },
+  {
+    label: "925 Silver Earrings",
+    href: "/earrings",
+  },
+  {
+    label: "Silver Bracelets",
+    href: "/bracelets",
+  },
+  {
+    label: "Silver Necklaces",
+    href: "/necklaces",
+  },
+  {
+    label: "Daily Wear Jewellery",
+    href: null,
+  },
+  {
+    label: "Office Wear Jewellery",
+    href: null,
+  },
+  {
+    label: "Jewellery Under ₹1999",
+    href: null,
+  },
+  {
+    label: "Gifts For Her",
+    href: null,
+  },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--c-062f4f)] text-white">
+    <footer className="w-full bg-[var(--c-062f4f)] text-white">
       {/* NEWSLETTER */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 md:grid-cols-2 md:items-center lg:px-8">
+      <div className="w-full border-b border-white/10">
+        <div className="mx-auto grid w-full max-w-[1500px] gap-10 px-5 py-14 md:grid-cols-2 md:items-center lg:px-10 xl:px-12">
           <div>
             <p className="mb-2 text-[10px] uppercase tracking-[0.28em] text-[var(--c-9cc9da)]">
               The Silpure Circle
             </p>
 
             <h2
-              className="text-3xl font-normal sm:text-4xl"
+              className="text-3xl font-normal sm:text-4xl lg:text-[42px]"
               style={{
                 fontFamily: "Georgia, 'Times New Roman', serif",
               }}
@@ -53,7 +78,10 @@ export default function Footer() {
               className="w-full bg-transparent py-4 text-sm text-white outline-none placeholder:text-white/45"
             />
 
-            <button className="flex items-center gap-2 whitespace-nowrap py-4 text-xs font-semibold uppercase tracking-[0.15em]">
+            <button
+              type="button"
+              className="flex items-center gap-2 whitespace-nowrap py-4 text-xs font-semibold uppercase tracking-[0.15em]"
+            >
               Subscribe
               <FiArrowRight />
             </button>
@@ -61,35 +89,37 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* FOOTER LINKS */}
-      <div className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+      {/* MAIN FOOTER */}
+      <div className="mx-auto w-full max-w-[1500px] px-5 py-16 lg:px-10 xl:px-12">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           {/* BRAND */}
-          <div className="lg:col-span-1">
-<Link to="/" className="inline-block">
-  <img
-    src={logo}
-    alt="Silpure"
-    className="h-[72px] w-auto object-contain brightness-0 invert"
-  />
-</Link>
+          <div>
+            <Link to="/" className="inline-block">
+              <img
+                src={logo}
+                alt="Silpure"
+                className="h-[82px] w-auto object-contain brightness-0 invert"
+              />
+            </Link>
 
-            <p className="mt-6 max-w-xs text-sm leading-6 text-white/55">
+            <p className="mt-6 max-w-[280px] text-sm leading-7 text-white/55">
               Modern jewellery thoughtfully designed for everyday moments,
               crafted to become a part of your story.
             </p>
 
-            <div className="mt-6 flex gap-3">
+            <div className="mt-7 flex gap-3">
               <a
                 href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:bg-white hover:text-[var(--c-062f4f)]"
+                aria-label="Instagram"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:bg-white hover:text-[var(--c-062f4f)]"
               >
                 <FiInstagram />
               </a>
 
               <a
                 href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:bg-white hover:text-[var(--c-062f4f)]"
+                aria-label="Facebook"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:bg-white hover:text-[var(--c-062f4f)]"
               >
                 <FiFacebook />
               </a>
@@ -98,88 +128,146 @@ export default function Footer() {
 
           {/* HELP */}
           <div>
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.18em]">
               Help
             </h4>
 
-            <div className="space-y-3 text-sm text-white/55">
-              <Link className="block hover:text-white" to="#">
+            <div className="space-y-4 text-sm text-white/55">
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Shipping Policy
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Returns & Refunds
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Track Your Order
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Jewellery Care
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Size Guide
-              </Link>
+              </button>
             </div>
           </div>
 
           {/* ABOUT */}
           <div>
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.18em]">
               About
             </h4>
 
-            <div className="space-y-3 text-sm text-white/55">
-              <Link className="block hover:text-white" to="/about">
+            <div className="space-y-4 text-sm text-white/55">
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Our Story
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Craftsmanship
-              </Link>
-              <Link className="block hover:text-white" to="/blog">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Journal
-              </Link>
-              <Link className="block hover:text-white" to="/contact">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Contact Us
-              </Link>
-              <Link className="block hover:text-white" to="#">
+              </button>
+
+              <button
+                type="button"
+                className="block transition hover:text-white"
+              >
                 Privacy Policy
-              </Link>
+              </button>
             </div>
           </div>
 
           {/* SHOP */}
           <div>
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.18em]">
               Shop
             </h4>
 
-            <div className="space-y-3 text-sm text-white/55">
-              <Link className="block hover:text-white" to="/shop">
+            <div className="space-y-4 text-sm text-white/55">
+              <Link
+                className="block transition hover:text-white"
+                to="/new-arrivals"
+              >
                 New Arrivals
               </Link>
-              <Link className="block hover:text-white" to="/shop">
+
+              <Link
+                className="block transition hover:text-white"
+                to="/rings"
+              >
                 Rings
               </Link>
-              <Link className="block hover:text-white" to="/shop">
+
+              <Link
+                className="block transition hover:text-white"
+                to="/earrings"
+              >
                 Earrings
               </Link>
-              <Link className="block hover:text-white" to="/shop">
+
+              <Link
+                className="block transition hover:text-white"
+                to="/necklaces"
+              >
                 Necklaces
               </Link>
-              <Link className="block hover:text-white" to="/shop">
-                Best Sellers
+
+              <Link
+                className="block transition hover:text-white"
+                to="/bracelets"
+              >
+                Bracelets
               </Link>
             </div>
           </div>
 
           {/* CONTACT */}
           <div>
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.18em]">
+            <h4 className="mb-6 text-xs font-semibold uppercase tracking-[0.18em]">
               Contact
             </h4>
 
-            <div className="space-y-4 text-sm text-white/55">
+            <div className="space-y-5 text-sm text-white/55">
               <div className="flex gap-3">
                 <FiPhone className="mt-1 shrink-0 text-[var(--c-93c6d8)]" />
+
                 <span>
                   Customer Support
                   <br />
@@ -189,31 +277,49 @@ export default function Footer() {
 
               <div className="flex gap-3">
                 <FiMail className="mt-1 shrink-0 text-[var(--c-93c6d8)]" />
-                <span>support@silpure.in</span>
+
+                <span>
+                  support@silpure.in
+                </span>
               </div>
 
               <div className="flex gap-3">
                 <FiMapPin className="mt-1 shrink-0 text-[var(--c-93c6d8)]" />
-                <span>India</span>
+
+                <span>
+                  India
+                </span>
               </div>
             </div>
           </div>
         </div>
 
         {/* POPULAR SEARCHES */}
-        <div className="mt-14 border-t border-white/10 pt-10">
+        <div className="mt-16 border-t border-white/10 pt-10">
           <h4 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/85">
             Popular Searches
           </h4>
 
           <div className="mt-4 flex flex-wrap gap-x-2 gap-y-2 text-xs leading-6 text-white/45">
             {popularLinks.map((item, index) => (
-              <span key={item}>
-                <Link to="/shop" className="transition hover:text-white">
-                  {item}
-                </Link>
+              <span key={item.label}>
+                {item.href ? (
+                  <Link
+                    to={item.href}
+                    className="transition hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="cursor-default text-white/35">
+                    {item.label}
+                  </span>
+                )}
+
                 {index !== popularLinks.length - 1 && (
-                  <span className="ml-2 text-white/20">|</span>
+                  <span className="ml-2 text-white/20">
+                    |
+                  </span>
                 )}
               </span>
             ))}
@@ -222,9 +328,11 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Silpure. All Rights Reserved.</p>
+          <p>
+            © 2026 Silpure. All Rights Reserved.
+          </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-5">
             <span>VISA</span>
             <span>MASTERCARD</span>
             <span>RUPAY</span>
