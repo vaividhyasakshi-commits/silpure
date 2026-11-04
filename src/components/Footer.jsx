@@ -28,6 +28,10 @@ const popularLinks = [
     href: "/necklaces",
   },
   {
+    label: "Silver Pendants",
+    href: "/pendants",
+  },
+  {
     label: "Daily Wear Jewellery",
     href: null,
   },
@@ -247,6 +251,10 @@ export default function Footer() {
                 to="/necklaces"
               >
                 Necklaces
+              </Link>
+
+              <Link className="block transition hover:text-white" to="/pendants">
+                Pendants
               </Link>
 
               <Link

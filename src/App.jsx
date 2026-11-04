@@ -4,6 +4,7 @@ import NewArrivals from "./pages/NewArrivals";
 import Rings from "./pages/Rings";
 import Earrings from "./pages/Earrings";
 import Necklaces from "./pages/Necklaces";
+import Pendants from "./pages/Pendants";
 import Bracelets from "./pages/Bracelets";
 import Anklets from "./pages/Anklets";
 import ToeRings from "./pages/ToeRings";
@@ -35,6 +36,7 @@ function App() {
         <Route path="/rings" element={<Rings />} />
         <Route path="/earrings" element={<Earrings />} />
         <Route path="/necklaces" element={<Necklaces />} />
+        <Route path="/pendants" element={<Pendants />} />
         <Route path="/bracelets" element={<Bracelets />} />
         <Route path="/anklets" element={<Anklets />} />
         <Route path="/toe-rings" element={<ToeRings />} />

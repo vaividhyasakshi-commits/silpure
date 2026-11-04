@@ -46,6 +46,10 @@ const shopColumns = [
         href: "/necklaces",
       },
       {
+        label: "Pendants",
+        href: "/pendants",
+      },
+      {
         label: "Bracelets",
         href: "/bracelets",
       },
@@ -147,6 +151,10 @@ const navLinks = [
   {
     label: "Necklaces",
     href: "/necklaces",
+  },
+  {
+    label: "Pendants",
+    href: "/pendants",
   },
   {
     label: "Bracelets",

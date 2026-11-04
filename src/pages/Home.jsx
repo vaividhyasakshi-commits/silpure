@@ -4,9 +4,25 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-import ringImage from "../assets/images/1.png";
 import heroImage1 from "../assets/images/11.png";
 import heroImage2 from "../assets/images/22.png";
+// Fixed homepage imagery: public/uploads/products, independent of the live catalogue.
+const uploadedImage = (name) => `${import.meta.env.BASE_URL}uploads/products/${name}`;
+const ringCard = uploadedImage("96ec3922d89582eab1965f8ade398696.png");
+const braceletCard = uploadedImage("837efc5143afb2c9626f6e460c3033b6.png");
+const ankletCard = uploadedImage("db9719098edd1759ca66cfacde78bbce.png");
+const pendantCard = uploadedImage("f613bbf42057a9e23ce720990a2ccdaf.png");
+const festiveCard = uploadedImage("c5f9a25a6a28c5eee2f33697fb107c52.png");
+const floralCard = uploadedImage("fb50394ec298a8c4db45040501dd4ff1.png");
+const pinkRingCard = uploadedImage("28e8927d9cd166899227e68aa8735e00.png");
+const blueAnkletCard = ankletCard;
+const elegantBraceletCard = uploadedImage("f53844756ba8cb6cc86ee9af1d2e168e.png");
+const weddingCard = uploadedImage("0b95d17ce9799e4c1a33a2f3ade3e7e2.png");
+
+// Temporary visual placeholders: the supplied ZIP has no earring or necklace photos.
+// Both are still sourced exclusively from public/uploads/products.
+const earringsCard = floralCard;
+const necklacesCard = pendantCard;
 
 import {
   FiArrowRight,
@@ -71,27 +87,33 @@ const promises = [
 const categories = [
   {
     title: "Earrings",
-    image: ringImage,
+    image: earringsCard,
+    link: "/earrings",
   },
   {
     title: "Rings",
-    image: ringImage,
+    image: ringCard,
+    link: "/rings",
   },
   {
     title: "Necklaces",
-    image: ringImage,
+    image: necklacesCard,
+    link: "/necklaces",
   },
   {
     title: "Bracelets",
-    image: ringImage,
+    image: braceletCard,
+    link: "/bracelets",
   },
   {
     title: "Gifting",
-    image: ringImage,
+    image: pendantCard,
+    link: "/gifts-for-her",
   },
   {
     title: "Everyday Edit",
-    image: ringImage,
+    image: ankletCard,
+    link: "/daily-wear",
   },
 ];
 
@@ -99,41 +121,49 @@ const occasions = [
   {
     title: "Festive",
     subtitle: "A little more sparkle.",
-    image: ringImage,
+    image: festiveCard,
+    link: "/festive",
   },
   {
     title: "Daily Wear",
     subtitle: "Made for every day.",
-    image: ringImage,
+    image: elegantBraceletCard,
+    link: "/daily-wear",
   },
   {
     title: "Office Wear",
     subtitle: "Polished. Minimal. Effortless.",
-    image: ringImage,
+    image: braceletCard,
+    link: "/office-wear",
   },
   {
     title: "Wedding",
     subtitle: "For unforgettable moments.",
-    image: ringImage,
+    image: weddingCard,
+    link: "/wedding",
   },
 ];
 
 const gifts = [
   {
     title: "For Her",
-    image: ringImage,
+    image: pinkRingCard,
+    link: "/gifts-for-her",
   },
   {
     title: "For Mom",
-    image: ringImage,
+    image: festiveCard,
+    link: "/gifts-for-mom",
   },
   {
     title: "For Sister",
-    image: ringImage,
+    image: floralCard,
+    link: "/gifts-for-sister",
   },
   {
     title: "For Yourself",
-    image: ringImage,
+    image: blueAnkletCard,
+    link: "/daily-wear",
   },
 ];
 
@@ -141,45 +171,50 @@ const priceCards = [
   {
     title: "Under ₹1,499",
     text: "Everyday Essentials",
-    image: ringImage,
+    image: ankletCard,
   },
   {
     title: "Under ₹1,999",
     text: "Everyday Favourites",
-    image: ringImage,
+    image: elegantBraceletCard,
   },
   {
     title: "Under ₹2,999",
     text: "Signature Designs",
-    image: ringImage,
+    image: ringCard,
   },
   {
     title: "Above ₹3,000",
     text: "Statement Pieces",
-    image: ringImage,
+    image: weddingCard,
   },
 ];
 
 const exclusive = [
   {
     title: "Earrings",
-    image: ringImage,
+    image: earringsCard,
+    link: "/earrings",
   },
   {
     title: "Necklaces",
-    image: ringImage,
+    image: necklacesCard,
+    link: "/necklaces",
   },
   {
     title: "Gifting",
-    image: ringImage,
+    image: pendantCard,
+    link: "/gifts-for-her",
   },
   {
     title: "Bracelets",
-    image: ringImage,
+    image: braceletCard,
+    link: "/bracelets",
   },
   {
     title: "Rings",
-    image: ringImage,
+    image: ringCard,
+    link: "/rings",
   },
 ];
 
@@ -426,10 +461,10 @@ export default function Home() {
               {categories.map((category) => (
                 <Link
                   key={category.title}
-                  to="/shop"
+                  to={category.link}
                   className="group"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[var(--c-eef5f7)]">
+                  <div className="relative aspect-square overflow-hidden bg-[var(--c-eef5f7)]">
                     <img
                       src={category.image}
                       alt={category.title}
@@ -470,9 +505,9 @@ export default function Home() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {occasions.map((occasion) => (
                 <Link
-                  to="/shop"
+                  to={occasion.link}
                   key={occasion.title}
-                  className="group relative aspect-[4/5] overflow-hidden bg-[var(--c-dcecef)]"
+                  className="group relative aspect-square overflow-hidden bg-[var(--c-dcecef)]"
                 >
                   <img
                     src={occasion.image}
@@ -544,7 +579,7 @@ export default function Home() {
         <section className="grid lg:grid-cols-2">
           <div className="relative min-h-[500px] overflow-hidden bg-[var(--c-dbeef2)] lg:min-h-[680px]">
             <img
-              src={ringImage}
+              src={ringCard}
               alt="Silpure signature collection"
               className="absolute inset-0 h-full w-full object-cover"
             />
@@ -596,10 +631,10 @@ export default function Home() {
               {gifts.map((gift) => (
                 <Link
                   key={gift.title}
-                  to="/shop"
+                  to={gift.link}
                   className="group"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[var(--c-edf5f7)]">
+                  <div className="relative aspect-square overflow-hidden bg-[var(--c-edf5f7)]">
                     <img
                       src={gift.image}
                       alt={gift.title}
@@ -720,11 +755,11 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-5">
               {exclusive.map((item) => (
                 <Link
-                  to="/shop"
+                  to={item.link}
                   key={item.title}
                   className="group"
                 >
-                  <div className="aspect-[4/5] overflow-hidden bg-[var(--c-e7f0f2)]">
+                  <div className="aspect-square overflow-hidden bg-[var(--c-e7f0f2)]">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -787,7 +822,7 @@ export default function Home() {
                 className="group relative aspect-square overflow-hidden bg-[var(--c-e9f2f4)]"
               >
                 <img
-                  src={ringImage}
+                  src={[ringCard, braceletCard, ankletCard, pendantCard, floralCard, festiveCard][item - 1]}
                   alt="Silpure Instagram"
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
                 />
