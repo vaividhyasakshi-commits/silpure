@@ -1,3 +1,5 @@
+import { useShop } from "../context/ShopContext";
+
 import {
   useState,
   useEffect,
@@ -165,6 +167,8 @@ const navLinks = [
 export default function Header() {
   const location = useLocation();
 
+  const { wishlistCount, cartCount } = useShop();
+
   /* =========================================================
      STATES
   ========================================================= */
@@ -320,7 +324,7 @@ export default function Header() {
         ================================================= */}
 
         <div className="relative border-b border-[var(--c-dfecef)] bg-white">
-          <div className="mx-auto flex h-[88px] max-w-[1500px] items-center justify-between px-5 lg:px-10">
+          <div className="mx-auto flex h-[88px] max-w-[1500px] items-center justify-between px-2 sm:px-5 lg:px-10">
             {/* ============================================
                 MOBILE MENU BUTTON
             ============================================= */}
@@ -347,7 +351,7 @@ export default function Header() {
               <img
                 src={logo}
                 alt="Silpure"
-                className="h-[58px] w-auto object-contain sm:h-[62px]"
+                className="h-[46px] max-w-[100px] w-auto object-contain sm:h-[62px] sm:max-w-none"
               />
             </Link>
 
@@ -580,7 +584,7 @@ export default function Header() {
                     ? "Switch to Sky Blue"
                     : "Switch to Deep Ocean"
                 }
-                className="theme-accent relative flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
+                className="theme-accent relative flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
               >
                 {theme ===
                 "ocean" ? (
@@ -603,7 +607,7 @@ export default function Header() {
                     !searchOpen
                   )
                 }
-                className="flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
+                className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
                 aria-label="Search"
               >
                 <FiSearch
@@ -624,32 +628,30 @@ export default function Header() {
               </button>
 
               {/* WISHLIST */}
-
-              <button
-                type="button"
-                className="hidden h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:flex"
-                aria-label="Wishlist"
+              <Link
+                to="/wishlist"
+                aria-label={`Wishlist (${wishlistCount})`}
+                className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:h-10 sm:w-10"
               >
-                <FiHeart
-                  size={20}
-                />
-              </button>
+                <FiHeart size={20} fill={wishlistCount > 0 ? "currentColor" : "none"} />
+                {wishlistCount > 0 && (
+                  <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] text-white">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
 
               {/* CART */}
-
-              <button
-                type="button"
-                className="relative flex h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)]"
-                aria-label="Cart"
+              <Link
+                to="/cart"
+                aria-label={`Shopping Bag (${cartCount})`}
+                className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:h-10 sm:w-10"
               >
-                <FiShoppingBag
-                  size={20}
-                />
-
-                <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-[var(--c-0b668d)] text-[9px] text-white">
-                  0
+                <FiShoppingBag size={20} />
+                <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--c-0b668d)] px-1 text-[9px] text-white">
+                  {cartCount}
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -880,15 +882,25 @@ export default function Header() {
               )
             )}
 
-            {/* WISHLIST */}
-
-            <button
-              type="button"
+            {/* MOBILE WISHLIST */}
+            <Link
+              to="/wishlist"
+              onClick={() => setMobileOpen(false)}
               className="flex w-full items-center gap-3 border-b border-[var(--c-edf2f4)] py-4 text-sm text-[var(--c-143e52)]"
             >
-              <FiHeart />
-              Wishlist
-            </button>
+              <FiHeart size={18} />
+              Wishlist ({wishlistCount})
+            </Link>
+
+            {/* MOBILE CART */}
+            <Link
+              to="/cart"
+              onClick={() => setMobileOpen(false)}
+              className="flex w-full items-center gap-3 border-b border-[var(--c-edf2f4)] py-4 text-sm text-[var(--c-143e52)]"
+            >
+              <FiShoppingBag size={18} />
+              Shopping Bag ({cartCount})
+            </Link>
           </div>
         </aside>
       </div>

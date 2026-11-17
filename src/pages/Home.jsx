@@ -1,3 +1,4 @@
+import ProductCard from "../components/ProductCard";
 import { useProducts } from "../context/ProductContext";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -28,7 +29,6 @@ import {
   FiArrowRight,
   FiChevronLeft,
   FiChevronRight,
-  FiHeart,
   FiTruck,
   FiShield,
   FiRefreshCcw,
@@ -254,57 +254,6 @@ function SectionHeader({ eyebrow, title, text }) {
           {text}
         </p>
       )}
-    </div>
-  );
-}
-
-function ProductCard({ product }) {
-  return (
-    <div className="group min-w-[75%] sm:min-w-[44%] lg:min-w-0">
-      <div className="relative aspect-[4/5] overflow-hidden bg-[var(--c-f3f7f8)]">
-        {product.badge && (
-          <span className="absolute left-3 top-3 z-10 bg-white px-3 py-1.5 text-[8px] font-semibold tracking-[0.14em] text-[var(--c-083750)] shadow-sm">
-            {product.badge}
-          </span>
-        )}
-
-        <button className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-[var(--c-204a5c)] shadow-sm transition hover:bg-[var(--c-063653)] hover:text-white">
-          <FiHeart size={16} />
-        </button>
-
-        <Link to={`/product/${product.slug || product.id}`}>
-          <img
-            src={product.image}
-            alt={product.name}
-            className="h-full w-full object-contain p-4 transition duration-700 group-hover:scale-[1.04]"
-          />
-        </Link>
-
-        <div className="absolute bottom-0 left-0 right-0 translate-y-full px-3 pb-3 transition duration-300 group-hover:translate-y-0">
-          <button className="w-full bg-[var(--c-063653)] py-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
-            Quick Add
-          </button>
-        </div>
-      </div>
-
-      <div className="pt-4 text-center">
-        <Link
-          to={`/product/${product.slug || product.id}`}
-          className="text-sm font-medium text-[var(--c-183e50)] transition hover:text-[var(--c-0b779d)]"
-        >
-          {product.name}
-        </Link>
-
-        <div className="mt-2 flex items-center justify-center gap-2 text-sm">
-          <span className="font-semibold text-[var(--c-082f49)]">₹{Number(product.price || 0).toLocaleString("en-IN")}</span>
-
-          {product.oldPrice && (
-            <span className="text-xs text-[var(--c-9aadb4)] line-through">
-              {product.oldPrice}
-            </span>
-          )}
-        </div>
-      </div>
     </div>
   );
 }
@@ -559,6 +508,7 @@ export default function Home() {
                 <ProductCard
                   key={product.id}
                   product={product}
+                  className="min-w-[75%] shrink-0 sm:min-w-[44%] lg:min-w-0"
                 />
               ))}
             </div>
