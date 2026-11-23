@@ -1,4 +1,5 @@
 import { useShop } from "../context/ShopContext";
+import { useAuth } from "../context/AuthContext";
 
 import {
   useState,
@@ -168,6 +169,7 @@ export default function Header() {
   const location = useLocation();
 
   const { wishlistCount, cartCount } = useShop();
+  const { user } = useAuth();
 
   /* =========================================================
      STATES
@@ -617,15 +619,14 @@ export default function Header() {
 
               {/* ACCOUNT */}
 
-              <button
-                type="button"
+              <Link
+                to={user ? "/my-account" : "/login"}
                 className="hidden h-10 w-10 items-center justify-center rounded-full text-[var(--c-123e53)] transition hover:bg-[var(--c-eef7f9)] sm:flex"
-                aria-label="Account"
+                aria-label={user ? "My Account" : "Login / Sign Up"}
+                title={user ? "My Account" : "Login / Sign Up"}
               >
-                <FiUser
-                  size={20}
-                />
-              </button>
+                <FiUser size={20} />
+              </Link>
 
               {/* WISHLIST */}
               <Link
@@ -881,6 +882,16 @@ export default function Header() {
                 </Link>
               )
             )}
+
+            {/* CUSTOMER ACCOUNT */}
+            <Link
+              to={user ? "/my-account" : "/login"}
+              onClick={() => setMobileOpen(false)}
+              className="flex w-full items-center gap-3 border-b border-[var(--c-edf2f4)] py-4 text-sm text-[var(--c-143e52)]"
+            >
+              <FiUser size={18} />
+              {user ? "My Account" : "Login / Sign Up"}
+            </Link>
 
             {/* MOBILE WISHLIST */}
             <Link

@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Routes,
@@ -41,17 +42,21 @@ import ProductForm from "./admin/ProductForm";
 
 import { AdminSessionProvider } from "./admin/AdminSession";
 
+import CustomerAuth from "./pages/CustomerAuth";
+import MyAccount from "./pages/MyAccount";
+
 function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-
       <AdminSessionProvider>
-
         <Routes>
 
           {/* MAIN WEBSITE */}
           <Route path="/" element={<Home />} />
-          <Route path="/new-arrivals" element={<NewArrivals />} />
+          <Route
+            path="/new-arrivals"
+            element={<NewArrivals />}
+          />
 
           {/* PRODUCT CATEGORIES */}
           <Route path="/rings" element={<Rings />} />
@@ -64,8 +69,14 @@ function App() {
 
           {/* MEN */}
           <Route path="/mens-rings" element={<MensRings />} />
-          <Route path="/mens-bracelets" element={<MensBracelets />} />
-          <Route path="/mens-chains" element={<MensChains />} />
+          <Route
+            path="/mens-bracelets"
+            element={<MensBracelets />}
+          />
+          <Route
+            path="/mens-chains"
+            element={<MensChains />}
+          />
 
           {/* OCCASIONS */}
           <Route path="/daily-wear" element={<DailyWear />} />
@@ -77,35 +88,40 @@ function App() {
           <Route path="/gifts-for-her" element={<GiftForHer />} />
           <Route path="/gifts-for-him" element={<GiftForHim />} />
           <Route path="/gifts-for-mom" element={<GiftForMom />} />
-          <Route path="/gifts-for-sister" element={<GiftForSister />} />
+          <Route
+            path="/gifts-for-sister"
+            element={<GiftForSister />}
+          />
           <Route path="/under-1999" element={<Under1999 />} />
 
           {/* SHOPPING FEATURES */}
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
 
+          {/* CUSTOMER AUTHENTICATION */}
+          <Route path="/login" element={<CustomerAuth />} />
+          <Route path="/my-account" element={<MyAccount />} />
+
           {/* ADMIN PANEL */}
-          <Route path="/admin-panel/login" element={<AdminLogin />} />
+          <Route
+            path="/admin-panel/login"
+            element={<AdminLogin />}
+          />
 
-          <Route path="/admin-panel" element={<AdminLayout />}>
-
+          <Route
+            path="/admin-panel"
+            element={<AdminLayout />}
+          >
             <Route index element={<Dashboard />} />
-
-            <Route
-              path="products"
-              element={<Products />}
-            />
-
+            <Route path="products" element={<Products />} />
             <Route
               path="products/new"
               element={<ProductForm />}
             />
-
             <Route
               path="products/edit/:id"
               element={<ProductForm />}
             />
-
           </Route>
 
         </Routes>
@@ -114,7 +130,6 @@ function App() {
         <ProductModal />
 
       </AdminSessionProvider>
-
     </BrowserRouter>
   );
 }
